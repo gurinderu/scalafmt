@@ -60,7 +60,7 @@ jobs:
       - uses: olafurpg/setup-scala@v7
         with:
           java-version: graalvm-ce-java11@20.1.0
-      - if: ${{ matrix.musl }} != null
+      - if: startsWith(matrix.musl,'http') == true
         name: Install musl bundle
         run: |
           wget ${{ matrix.musl }}
