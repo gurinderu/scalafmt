@@ -181,7 +181,11 @@ lazy val cli = project
     ),
     scalacOptions ++= scalacJvmOptions.value,
     mainClass in GraalVMNativeImage := Some("org.scalafmt.cli.Cli"),
-    graalVMNativeImageOptions ++= Option(System.getenv("NATIVE_IMAGE_ADDITIONAL_PARAMS")).toSeq
+    graalVMNativeImageOptions ++= Option(
+      System.getenv("NATIVE_IMAGE_ADDITIONAL_PARAMS")
+    ).toSeq
+      .flatMap(_.split(" "))
+      .map(_.trim)
   )
   .dependsOn(coreJVM, dynamic)
   .enablePlugins(GraalVMNativeImagePlugin)
