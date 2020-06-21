@@ -51,12 +51,12 @@ jobs:
             artifact: scalafmt-linux-glibc
           - os: ubuntu-latest
             url: https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GRAALV_VERSION}/graalvm-ce-java11-linux-amd64-${GRAALV_VERSION}.tar.gz
-            url: https://github.com/gradinac/musl-bundle-example/releases/download/v1.0/musl.tar.gz
+            musl: https://github.com/gradinac/musl-bundle-example/releases/download/v1.0/musl.tar.gz
             artifact: scalafmt-linux-musl
     steps:
       - uses: actions/checkout@v2
       - uses: olafurpg/setup-scala@v6
-      - run: jabba install graal-custom@20.0=tgz+${{ matrix.url }}
+      - run: jabba install graal-custom@20.1=tgz+${{ matrix.url }}
       - run: bin/build-native-image.sh
         env:
           CI: true
