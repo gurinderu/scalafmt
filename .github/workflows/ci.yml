@@ -36,17 +36,23 @@ jobs:
       - run: yarn format-check
   native-image:
     runs-on: ${{ matrix.os }}
+    env: 
+       GRAALVM_VERSION = 20.1.0
     strategy:
       fail-fast: false
       matrix:
-        os: [macOS-latest, ubuntu-latest]
+        os: [macOS-latest, ubuntu-latest, ubuntu-latest]
         include:
           - os: macOS-latest
-            url: https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.0.0/graalvm-ce-java11-darwin-amd64-20.0.0.tar.gz
+            url: https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GRAALV_VERSION}/graalvm-ce-java11-darwin-amd64-${GRAALV_VERSION}.tar.gz
             artifact: scalafmt-macos
           - os: ubuntu-latest
-            url: https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.0.0/graalvm-ce-java11-linux-amd64-20.0.0.tar.gz
-            artifact: scalafmt-linux
+            url: https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GRAALV_VERSION}/graalvm-ce-java11-linux-amd64-${GRAALV_VERSION}.tar.gz
+            artifact: scalafmt-linux-glibc
+          - os: ubuntu-latest
+            url: https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GRAALV_VERSION}/graalvm-ce-java11-linux-amd64-${GRAALV_VERSION}.tar.gz
+            url: https://github.com/gradinac/musl-bundle-example/releases/download/v1.0/musl.tar.gz
+            artifact: scalafmt-linux-musl
     steps:
       - uses: actions/checkout@v2
       - uses: olafurpg/setup-scala@v6
