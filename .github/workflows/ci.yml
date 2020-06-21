@@ -45,12 +45,11 @@ jobs:
         include:
           - os: macOS-latest
             artifact: scalafmt-macos
-            config: macos
           - os: ubuntu-latest
             artifact: scalafmt-linux-glibc
-            config: linux-glibc
-          - os: |
+            config: |
               --static
+          - os: ubuntu-latest
             musl: https://github.com/gradinac/musl-bundle-example/releases/download/v1.0/musl.tar.gz
             artifact: scalafmt-linux-musl
             config: |
