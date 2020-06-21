@@ -58,7 +58,7 @@ jobs:
             libc: musl
             artifact: scalafmt-linux-musl
             config: |
-              --static
+              --static \
               -H:UseMuslC=/home/runner/work/scalafmt/scalafmt/bundle
     steps:
       - uses: actions/checkout@v2
