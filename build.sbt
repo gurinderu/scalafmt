@@ -182,24 +182,9 @@ lazy val cli = project
     scalacOptions ++= scalacJvmOptions.value,
     mainClass in GraalVMNativeImage := Some("org.scalafmt.cli.Cli"),
     graalVMNativeImageOptions ++= {
-      val reflectionFile =
-        Keys.sourceDirectory.in(Compile).value./("graal")./("reflection.json")
-      assert(reflectionFile.exists, "no such file: " + reflectionFile)
-      List(
-        "-H:+ReportUnsupportedElementsAtRuntime",
-        "-Dscalafmt.native-image=true",
-        "--initialize-at-build-time",
-        "--no-server",
-        "--enable-http",
-        "--enable-https",
-        "-H:EnableURLProtocols=http,https",
-        "--enable-all-security-services",
-        "--no-fallback",
-        s"-H:ReflectionConfigurationFiles=$reflectionFile",
-        "--allow-incomplete-classpath",
-        "-H:+ReportExceptionStackTraces"
-        //"--initialize-at-build-time=scala.Function1"
-      )
+      Option(System.getenv("NATIVE_IMAGE_ADDITIONAL_PARAMS"))
+        .map(value=>s"-VNATIVE_IMAGE_ADDITIONAL_PARAMS=$value")
+        .toSeq
     }
   )
   .dependsOn(coreJVM, dynamic)
