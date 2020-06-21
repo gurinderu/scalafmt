@@ -37,7 +37,7 @@ jobs:
   native-image:
     runs-on: ${{ matrix.os }}
     env: 
-       GRAALVM_VERSION = 20.1.0
+      GRAALVM_VERSION: 20.1.0
     strategy:
       fail-fast: false
       matrix:
