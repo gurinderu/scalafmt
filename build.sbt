@@ -186,6 +186,7 @@ lazy val cli = project
     ).toSeq
       .flatMap(_.split(" "))
       .map(_.trim)
+      .filter(_.isEmpty)
   )
   .dependsOn(coreJVM, dynamic)
   .enablePlugins(GraalVMNativeImagePlugin)

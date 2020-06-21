@@ -54,7 +54,7 @@ jobs:
             artifact: scalafmt-linux-musl
             config: |
               --static
-              -H:UseMuslC=./bundle
+              -H:UseMuslC=/home/runner/work/scalafmt/scalafmt/bundle
     steps:
       - uses: actions/checkout@v2
       - uses: olafurpg/setup-scala@v7
