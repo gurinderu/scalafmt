@@ -65,7 +65,7 @@ jobs:
       - uses: olafurpg/setup-scala@v7
         with:
           java-version: graalvm-ce-java11@20.1.0
-      - if: startsWith(matrix.musl,'http') == true
+      - if: matrix.libc == 'musl'
         name: Install musl bundle
         run: |
           wget https://github.com/gradinac/musl-bundle-example/releases/download/v1.0/musl.tar.gz
