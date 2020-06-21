@@ -59,7 +59,7 @@ jobs:
             artifact: scalafmt-linux-musl
             env:
               - NATIVE_IMAGE_STATIC: true
-              - NATIVE_IMAGE_MUSL: /home/runner/work/scalafmt/scalafmt/bundle
+              - NATIVE_IMAGE_MUSL: ${GITHUB_WORKSPACE}/bundle
     steps:
       - uses: actions/checkout@v2
       - uses: olafurpg/setup-scala@v7
