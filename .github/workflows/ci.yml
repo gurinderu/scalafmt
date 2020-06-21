@@ -6,7 +6,7 @@ on:
     tags:
       - '*'
   pull_request:
-  
+
 jobs:
   test:
     strategy:
@@ -36,7 +36,7 @@ jobs:
       - run: yarn format-check
   native-image:
     runs-on: ${{ matrix.os }}
-    env: 
+    env:
       GRAALVM_VERSION: 20.1.0
     strategy:
       fail-fast: false
@@ -46,6 +46,20 @@ jobs:
         exclude:
           - os: macOS-latest
             libc: musl
+        include:
+          - os: macOS-latest
+            artifact: scalafmt-macos
+          - os: ubuntu-latest
+            libc: glibc
+            artifact: scalafmt-linux-glibc
+            env:
+              - NATIVE_IMAGE_STATIC: true
+          - os: ubuntu-latest
+            libc: musl
+            artifact: scalafmt-linux-musl
+            env:
+              - NATIVE_IMAGE_STATIC: true
+              - NATIVE_IMAGE_MUSL: /home/runner/work/scalafmt/scalafmt/bundle
     steps:
       - uses: actions/checkout@v2
       - uses: olafurpg/setup-scala@v7
@@ -60,8 +74,6 @@ jobs:
       - run: bin/build-native-image.sh
         env:
           CI: true
-          LIBC: ${{ matrix.libc }}
-          OS: ${{ matrix.os }}
       - uses: actions/upload-artifact@master
         with:
           name: ${{ matrix.artifact }}
