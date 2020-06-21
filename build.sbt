@@ -184,7 +184,7 @@ lazy val cli = project
     graalVMNativeImageOptions ++= Option(
       System.getenv("NATIVE_IMAGE_ADDITIONAL_PARAMS")
     ).toSeq
-      .flatMap(_.split(" "))
+      .flatMap(_.split("\\W+"))
       .map(_.trim)
       .filter(_.nonEmpty)
   )
