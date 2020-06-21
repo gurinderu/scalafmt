@@ -63,6 +63,7 @@ jobs:
       - run: bin/build-native-image.sh
         env:
           CI: true
+          NATIVEIMAGE_CONFIG: ${{ matrix.config }}
       - uses: actions/upload-artifact@master
         with:
           name: ${{ matrix.artifact }}
