@@ -46,20 +46,6 @@ jobs:
         exclude:
           - os: macOS-latest
             libc: musl
-        include:
-          - os: macOS-latest
-            artifact: scalafmt-macos
-          - os: ubuntu-latest
-            libc: glibc
-            artifact: scalafmt-linux-glibc
-            config: |
-              --static
-          - os: ubuntu-latest
-            libc: musl
-            artifact: scalafmt-linux-musl
-            config: |
-              --static
-              -H:UseMuslC=/home/runner/work/scalafmt/scalafmt/bundle
     steps:
       - uses: actions/checkout@v2
       - uses: olafurpg/setup-scala@v7
@@ -74,7 +60,8 @@ jobs:
       - run: bin/build-native-image.sh
         env:
           CI: true
-          NATIVE_IMAGE_ADDITIONAL_PARAMS: ${{ matrix.config }}
+          LIBC: ${{ matrix.libc }}
+          OS: ${{ matrix.os }}
       - uses: actions/upload-artifact@master
         with:
           name: ${{ matrix.artifact }}

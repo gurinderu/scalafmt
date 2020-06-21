@@ -181,12 +181,14 @@ lazy val cli = project
     ),
     scalacOptions ++= scalacJvmOptions.value,
     mainClass in GraalVMNativeImage := Some("org.scalafmt.cli.Cli"),
-    graalVMNativeImageOptions ++= Option(
-      System.getenv("NATIVE_IMAGE_ADDITIONAL_PARAMS")
-    ).toSeq
-      .flatMap(_.split("\\W+"))
-      .map(_.trim)
-      .filter(_.nonEmpty)
+    graalVMNativeImageOptions ++= {
+      (System.getenv("OS"), System.getenv("LIBC")) match {
+        case (os, "glibc") if os.startsWith("ubuntu") => Seq("--static")
+        case (os, "libc") if os.startsWith("ubuntu") =>
+          Seq("--static", "-H:UseMuslC=./bundle")
+        case _ => Seq.empty
+      }
+    }
   )
   .dependsOn(coreJVM, dynamic)
   .enablePlugins(GraalVMNativeImagePlugin)
