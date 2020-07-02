@@ -1,3 +1,5 @@
+TEST
+
 # scalafmt
 [![Build Status](https://img.shields.io/github/workflow/status/scalameta/scalafmt/CI)](https://github.com/scalameta/scalafmt/actions)
 [![Build status](https://ci.appveyor.com/api/projects/status/7gha7cxm5lw8fsc3)](https://ci.appveyor.com/project/olafurpg/scalafmt/branch/master)
